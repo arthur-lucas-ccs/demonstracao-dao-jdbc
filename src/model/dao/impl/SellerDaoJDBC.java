@@ -70,6 +70,7 @@ public class SellerDaoJDBC implements SellerDao {
         }
     }
 
+    @Override
     public List<Seller> findByDepartment(Department department) {
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -82,6 +83,46 @@ public class SellerDaoJDBC implements SellerDao {
                             + "ORDER BY Name");
 
             st.setInt(1, department.getId());
+            rs = st.executeQuery();
+
+            List<Seller> list = new ArrayList<>();
+
+            Map<Integer, Department> map = new HashMap<>();
+
+            while(rs.next()){
+                Department dep = map.get(rs.getInt("DepartmentId")); //retorna nulo se nao existir nenhum departamento com esse id
+
+                if (dep == null){
+                    dep = instantiateDepartment(rs);
+                    map.put(dep.getId(), dep);
+                }
+
+                Seller obj = instantiateSeller(rs, dep);
+
+                list.add(obj);
+            }
+            return list;
+        }
+        catch(SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally{
+            DB.closeStatement(st);
+            DB.closeStatement(rs);
+        }
+    }
+
+    @Override
+    public List<Seller> findAll(){
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try{
+            st = conn.prepareStatement(
+                    "SELECT seller.*, department.Name as DepName "
+                            + "FROM seller INNER JOIN department "
+                            + "ON seller.DepartmentId = department.Id "
+                            + "ORDER BY Name");
+
             rs = st.executeQuery();
 
             List<Seller> list = new ArrayList<>();
@@ -132,8 +173,4 @@ public class SellerDaoJDBC implements SellerDao {
         return dep;
     }
 
-    @Override
-    public List<Seller> findAll() {
-        return List.of();
-    }
 }
