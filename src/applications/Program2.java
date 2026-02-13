@@ -24,5 +24,10 @@ public class Program2 {
         Department newDep = new Department(null, "carros");
         departmentDao.insert(newDep);
         System.out.println("Inserted! new id: " + newDep.getId());
+
+        System.out.println("=== Test 4: department update ===");
+        newDep.setName("motos");
+        departmentDao.update(newDep);
+        System.out.println("Updated! new name: " + newDep.getName());
     }
 }
