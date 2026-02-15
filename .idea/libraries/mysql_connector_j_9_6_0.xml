@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="postgresql-42.7.9">
+  <library name="mysql-connector-j-9.6.0">
     <CLASSES>
       <root url="jar://$USER_HOME$/java-libs/mysql-connector-j-9.6.0.jar!/" />
     </CLASSES>

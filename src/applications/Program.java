@@ -36,13 +36,13 @@ public class Program {
         System.out.println("Inserted! new id: " + newSeller.getId());
 
         System.out.println("=== Test 5: Seller update ===");
-        seller = sellerDao.findById(15);
+        seller = sellerDao.findById(1);
         seller.setName("Gabrielly");
         sellerDao.update(seller);
         System.out.println("Updated!");
 
         System.out.println("=== Test 6: Seller Delete ===");
-        sellerDao.deleteById(898985);
+        sellerDao.deleteById(10);
         System.out.println("Deleted!");
 
 
